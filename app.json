@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "app-treino",
+    "slug": "app-treino",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
