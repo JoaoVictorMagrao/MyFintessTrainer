@@ -1,11 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { UserProvider } from './src/context/ContextUser';
 import AppNavigator from './src/routes/AppNagivator';
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <AppNavigator />
+      <UserProvider>
+        <AppNavigator />
+      </UserProvider>
     </View>
   );
 }
