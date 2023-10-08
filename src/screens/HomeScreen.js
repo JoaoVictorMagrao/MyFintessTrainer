@@ -2,24 +2,85 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView  } from 'react-native';
 import { useUserContext } from '../context/ContextUser';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import  createDataBdTreino  from '../SQLite/treinos';
+import * as SQLite from 'expo-sqlite';
+import NetInfo from "@react-native-community/netinfo";
+//import { createDataBdTreino } from '../SQLite/treinos';
 import api from '../services/apiServices';
 
 function HomeScreen({ navigation }) {
   const { userData } = useUserContext();
-  const [dataTraining, setDataTraining]  = useState([]);
+  const db = SQLite.openDatabase("myfitnessTrainer.db");
+  const [treinos, setTreinos] = useState([]);
+  //const [dataTraining, setDataTraining]  = useState([]);
 //userData?.id
-alert(userData?.id);
-alert(userData?.nome);
-alert(userData?.email);
-alert(userData?.senha);
-alert(userData?.id_ficha);
+// alert(userData?.id);
+// alert(userData?.nome);
+// alert(userData?.email);
+// alert(userData?.senha);
+// alert(userData?.id_ficha);
+
+const fetchTreinos = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM treinos',
+        [],
+        (_, { rows }) => {
+          const treinos = rows._array; 
+          resolve(treinos);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
+const handleTraining = async () => {
+  try {
+    const netInfoState = await NetInfo.fetch();
+    if (netInfoState.isConnected) {
+      const response = await api.get(`/listaTreinosAluno/${userData?.id_ficha}`);
+      const data = response.data;
+
+      db.transaction((tx) => {
+        tx.executeSql(
+        'DELETE FROM treinos;'
+        );
+        data.forEach((item) => {
+          tx.executeSql(
+            'INSERT INTO treinos (id, id_exercicio, id_dia_treino, id_grupo_muscular, id_ficha) VALUES (?, ?, ?, ?, ?)',
+            [item.id, item.id_exercicio, item.id_dia_treino, item.id_grupo_muscular, item.id_ficha]
+          );
+        });
+      });
+     // setDataTraining(data);
+  }
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+  }
+};
 useEffect(() => {
- // createDataBdTreino(); 
-
-
-  
+  handleTraining();
+  fetchTreinos()
+  .then((data) => {
+    console.log(data);
+    setTreinos(data);
+  })
+  .catch((error) => {
+    console.error('Erro ao buscar treinos:', error);
+  });
 }, []);
+
+const trainingDay = {
+  1: 'Treino G',
+  2: 'Treino A',
+  3: 'Treino B',
+  4: 'Treino C',
+  5: 'Treino D',
+  6: 'Treino E',
+  7: 'Treino F',
+};
 
   return (
     <SafeAreaView >
@@ -28,30 +89,16 @@ useEffect(() => {
         <View style={[styles.header]}>
           <Text style={[styles.textHeader]}>MyFitness Trainer</Text>
         </View>
-     
-      {/* <ScrollView contentContainerStyle={styles.container}>
-        {dataTraining.map((training, index) => (
-          
-          <View key={training.id} style={styles.card}>
-          <View
-            style={[
-              styles.statusIndicator,
-              {
-                backgroundColor: training.ativo === 1 ? 'green' : 'red',
-                position: 'absolute', // Define a posição absoluta
-                top: 5, // Alinha no topo
-                left: 5, // Alinha à esquerda
-                width: 16, // Largura absoluta
-                height: 16, // Altura absoluta
-                borderRadius: 8, // Borda arredondada para criar uma bolinha
-              },
-            ]}
-          />
-          <Text style={styles.cardTitle}>{training.nome_ficha}</Text>
-        </View>
-        
-        ))}
-        </ScrollView> */}
+
+        <View>
+        <View style={styles.container}>
+          {treinos.map((treino) => (
+            <View key={treino.id} style={styles.treinoContainer}>
+              <Text style={styles.treinoText}>{trainingDay[treino.id_dia_treino]}</Text>
+            </View>
+          ))}
+      </View>
+    </View>
       {/* <Button
         title="Go to DetailsSSSSSSS"
         onPress={() => navigation.navigate('Login')}
@@ -66,6 +113,20 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10
+  },
+  treinoContainer: {
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    borderRadius: 5,
+    width: '90%'
+  },
+  treinoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'blue', 
   },
   textHeader: {
     color: 'white',

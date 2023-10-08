@@ -1,26 +1,33 @@
 import * as SQLite from 'expo-sqlite';
 import { useUserContext } from '../context/ContextUser';
 
-
-export function createDataBdTreino() {
-  const { userData } = useUserContext();
-  //console.log(userData?.id);
-
-  const db = SQLite.openDatabase("myfitnessTrainer.db");
-  // const handleTraining = async () => {
-  //   try {
-  //     const response = await api.get(`/listaTreinosAluno/${userData?.id}`);
-  //     setDataTraining(response.data);
-  //   } catch (error) {
-  //     console.error('Erro na requisição:', error);
-  //   }
-  // };
+const db = SQLite.openDatabase("myfitnessTrainer.db");
+  
   db.transaction(tx => {
     tx.executeSql(
       "CREATE TABLE IF NOT EXISTS treinos (id INTEGER, id_exercicio INTEGER, id_dia_treino INTEGER, id_grupo_muscular INTEGER, id_ficha INTEGER);"
     );
   });
-  return '123';
-}
+
+  
+  // export const formatCnpjCpf = function (value) {
+  //   const cnpjCpf = value.replace(/\D/g, '')
+  
+  //   if(cnpjCpf.length === 11){
+  //     return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4')
+  //   }
+  //   return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, '$1.$2.$3-$4')
+  // }
+  
+ 
+  // const { userData } = useUserContext();
+  // // alert('ID DO USUARIO ' + userData?.id);
+
+  
+ 
+ 
+  
+
+
 
 //createDatabase();

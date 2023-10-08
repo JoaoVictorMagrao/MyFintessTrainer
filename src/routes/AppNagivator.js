@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // TELAS
 import HomeScreen from '../screens/HomeScreen';
 import DetailsScreen from '../screens/DetailsScreen';
-import LoginScreen from '../screens/LoginScreen';
+import LoginScreen from '../screens/Login';
 import Toast from 'react-native-toast-message';
 const Stack = createStackNavigator();
 

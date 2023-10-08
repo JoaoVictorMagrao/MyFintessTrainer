@@ -1,9 +1,9 @@
 import React, { useState, useEffect  } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Input, Button, Icon, CheckBox  } from 'react-native-elements';
-import api from '../services/apiServices';
+import api from '../../services/apiServices';
 import Toast from 'react-native-toast-message';
-import { useUserContext } from '../context/ContextUser';
+import { useUserContext } from '../../context/ContextUser';
 import * as SQLite from 'expo-sqlite';
 
 
@@ -38,9 +38,6 @@ function LoginScreen({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [idFicha, setIdFicha] = useState('');
-  const [idAluno, setIdAluno] = useState('');
-  const [nomeAluno, setNomeAluno] = useState('');
   const { setUser } = useUserContext();
   const [rememberPassword, setRememberPassword] = useState(false);
 
@@ -49,30 +46,22 @@ function LoginScreen({ navigation }) {
   }, []); 
 
   const handleLogin = () => {
-    alert('12');
     db.transaction((tx) => {
-      alert('2');
       tx.executeSql(
         "SELECT email, password, id, idFicha, userName FROM users",
         [],
-        (_, results) => {
-          alert('1');
+        (_, results) => {        
           var len = results.rows.length;
-            setEmail(results.rows.item(0).email);
-            setPassword(results.rows.item(0).password);
-          //  setShowPassword(results.rows.item(0).showPassword);
-            setIdFicha(results.rows.item(0).idFicha);
-            setIdAluno(results.rows.item(0).id);
-            setNomeAluno(results.rows.item(0).userName);
 
           if (len > 0) { 
             const userObject = {
-              email: email,
-              id: idAluno,
-              id_ficha: idFicha,
-              nome: nomeAluno,
-              senha: password
+              email: results.rows.item(0).email,
+              id: results.rows.item(0).id,
+              id_ficha: results.rows.item(0).idFicha,
+              nome: results.rows.item(0).userName,
+              senha: results.rows.item(0).password
             };
+
             console.log(userObject);
             setUser(userObject);
               navigation.navigate('Home');
@@ -90,6 +79,7 @@ function LoginScreen({ navigation }) {
   
 
   const handleLoginAsync = async () => {
+
     try {
       const response = await api.post('/loginAluno', {
         email: email,
@@ -99,13 +89,11 @@ function LoginScreen({ navigation }) {
       if (response.data.msg === 'OK') {
         const user = response.data.user;
         setUser(user);
-        if (rememberPassword == true){
+        if (rememberPassword){
         
           db.transaction((tx) => {
               tx.executeSql("DELETE FROM users;");
-              if(rememberPassword){
-                tx.executeSql("insert into users (username, password, id, email, idFicha) values (?, ?, ?, ?, ?,?);", [user.nome, user.senha, user.id, user.email, user.id_ficha])
-              };
+                tx.executeSql("insert into users (username, password, id, email, idFicha) values (?, ?, ?, ?, ?);", [user.nome, user.senha, user.id, user.email, user.id_ficha])
           })
         }
         navigation.navigate('Home');
