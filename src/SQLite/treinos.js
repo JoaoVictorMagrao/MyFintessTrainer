@@ -3,11 +3,7 @@ import { useUserContext } from '../context/ContextUser';
 
 const db = SQLite.openDatabase("myfitnessTrainer.db");
   
-  db.transaction(tx => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS treinos (id INTEGER, id_exercicio INTEGER, id_dia_treino INTEGER, id_grupo_muscular INTEGER, id_ficha INTEGER);"
-    );
-  });
+ 
 
   
   // export const formatCnpjCpf = function (value) {

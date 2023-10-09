@@ -1,10 +1,11 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { Input, Button, Icon, CheckBox  } from 'react-native-elements';
-import api from '../../services/apiServices';
+import { Input, Button, Icon, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
 import { useUserContext } from '../../context/ContextUser';
 import * as SQLite from 'expo-sqlite';
+import { registerUser } from './functions/registerUser';
+import { LoginUser } from './functions/loginUser';
 
 
 function openDatabase() {
@@ -38,76 +39,32 @@ function LoginScreen({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUser } = useUserContext();
+  const { userData, setUser } = useUserContext();
   const [rememberPassword, setRememberPassword] = useState(false);
 
   useEffect(() => {
     handleLogin();
-  }, []); 
+  }, []);
 
   const handleLogin = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT email, password, id, idFicha, userName FROM users",
-        [],
-        (_, results) => {        
-          var len = results.rows.length;
-
-          if (len > 0) { 
-            const userObject = {
-              email: results.rows.item(0).email,
-              id: results.rows.item(0).id,
-              id_ficha: results.rows.item(0).idFicha,
-              nome: results.rows.item(0).userName,
-              senha: results.rows.item(0).password
-            };
-
-            console.log(userObject);
-            setUser(userObject);
-              navigation.navigate('Home');
-          } else {
-              handleLoginAsync();
-          }
-        },
-        (_, error) => {
-          // Callback de erro
-          console.error('Erro ao executar o SELECT: ', error);
-        }
-      );
-    });
+    LoginUser({
+      db,
+      setUser,
+      navigation,
+      handleLoginAsync
+    })
   };
-  
+
 
   const handleLoginAsync = async () => {
-
-    try {
-      const response = await api.post('/loginAluno', {
-        email: email,
-        senha: password
-      });
-  
-      if (response.data.msg === 'OK') {
-        const user = response.data.user;
-        setUser(user);
-        if (rememberPassword){
-        
-          db.transaction((tx) => {
-              tx.executeSql("DELETE FROM users;");
-                tx.executeSql("insert into users (username, password, id, email, idFicha) values (?, ?, ?, ?, ?);", [user.nome, user.senha, user.id, user.email, user.id_ficha])
-          })
-        }
-        navigation.navigate('Home');
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Credenciais incorretas',
-          text2: 'Verifique seu email e senha e tente novamente.',
-          visibilityTime: 3000, // Tempo de exibição do toast em milissegundos
-        });
-      }
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-    }
+    registerUser({
+      email,
+      password,
+      setUser,
+      rememberPassword,
+      navigation,
+      db
+    })
   };
 
   return (
@@ -132,13 +89,13 @@ function LoginScreen({ navigation }) {
         value={password}
         secureTextEntry
       />
-       <CheckBox
+      <CheckBox
         title="Lembrar senha"
         checked={rememberPassword}
         onPress={() => setRememberPassword(!rememberPassword)}
-        containerStyle={styles.checkboxContainer} 
-        textStyle={styles.checkboxText} 
-      
+        containerStyle={styles.checkboxContainer}
+        textStyle={styles.checkboxText}
+
       />
       <Button
         title="Login"
@@ -162,12 +119,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   checkboxContainer: {
-    backgroundColor: 'transparent', 
-    borderWidth: 0, 
+    backgroundColor: 'transparent',
+    borderWidth: 0,
   },
 
   checkboxText: {
-    color: '#000', 
+    color: '#000',
   },
   title: {
     fontSize: 24,
@@ -175,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  titleCor:{
+  titleCor: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
