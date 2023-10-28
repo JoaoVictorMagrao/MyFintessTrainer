@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity  } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SQLite from 'expo-sqlite';
-import { showTraining } from './function/showTraining';
-import { trainingList } from './function/trainingList';
-import { clickTrainingDay} from './function/clickTrainingDay';
+import { useRoute } from '@react-navigation/native';
+import { showExercises } from './functions/showExercises';
 
-function HomeScreen({ navigation }) {
+
+function WorkoutExerciesScreen({ navigation }) {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
-  const [treinos, setTreinos] = useState([]);
+  const route = useRoute();
+  const [exercices, setExercises] = useState([]);
+  useEffect(() => {
+    const { id_dia_treino } = route.params;
+
+    showExercises(id_dia_treino).then((data) => {
+      setExercises(data);
+    });
+  }, []);
  
   //const [dataTraining, setDataTraining]  = useState([]);
 
@@ -21,26 +29,17 @@ function HomeScreen({ navigation }) {
 
 
 
-useEffect(() => {
-  trainingList();
-  showTraining({ db })
-  .then((data) => {
-    setTreinos(data);
-  })
-  .catch((error) => {
-    console.error('Erro ao buscar treinos:', error);
-  });
-}, []);
-
-const trainingDay = {
-  1: 'Treino G',
-  2: 'Treino A',
-  3: 'Treino B',
-  4: 'Treino C',
-  5: 'Treino D',
-  6: 'Treino E',
-  7: 'Treino F',
-};
+// useEffect(() => {
+//  // trainingList();
+//   showExercices({ db })
+//   .then((data) => {
+//     console.log(data);
+//     setTreinos(data);
+//   })
+//   .catch((error) => {
+//     console.error('Erro ao buscar treinos:', error);
+//   });
+// }, []);
 
   return (
     <SafeAreaView >
@@ -52,14 +51,14 @@ const trainingDay = {
         
         <View>
         <View style={styles.container}>
-          {/* {console.log(treinos)} */}
-          {treinos.map((treino) => (
+        {/* //  {console.log(exercices)} */}
+          {exercices.map((exercise) => (
             <TouchableOpacity
-              key={treino.id}
+              key={exercise.id}
               style={styles.treinoContainer}
-              onPress={() => clickTrainingDay({ id_dia_treino: treino.id_dia_treino, navigation })}
+              onPress={() => clickTrainingDay(exercise.id)}
             >
-              <Text style={styles.treinoText}>{trainingDay[treino.id_dia_treino]}</Text>
+              <Text style={styles.treinoText}>{exercise.exercicio}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -131,4 +130,4 @@ const styles = StyleSheet.create({
   },
 
 });
-export default HomeScreen;
+export default WorkoutExerciesScreen;

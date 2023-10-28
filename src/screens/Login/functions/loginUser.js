@@ -5,12 +5,12 @@ export const LoginUser = ({ db, setUser, navigation, handleLoginAsync }) => {
             [],
             (_, results) => {
                 var len = results.rows.length;
-alert(len);
+
                 if (len > 0) {
                     const userObject = {
                         email: results.rows.item(0).email,
                         id: results.rows.item(0).id,
-                        id_ficha: results.rows.item(0).idFicha,
+                        id_ficha: parseInt(results.rows.item(0).idFicha),
                         nome: results.rows.item(0).userName,
                         senha: results.rows.item(0).password
                     };
@@ -22,7 +22,6 @@ alert(len);
                 }
             },
             (_, error) => {
-                // Callback de erro
                 console.error('Erro ao executar o SELECT: ', error);
             }
         );

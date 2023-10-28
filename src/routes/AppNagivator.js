@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // TELAS
 import HomeScreen from '../screens/Home/index';
-import DetailsScreen from '../screens/DetailsScreen';
+import WorkoutExerciesScreen from '../screens/WorkoutExercises/index';
 import LoginScreen from '../screens/Login/index';
 // import Toast from 'react-native-toast-message';
 const Stack = createStackNavigator();
@@ -17,9 +17,10 @@ function AppNavigator() {
               statusBarStyle: 'dark',
           }}  initialRouteName="Login">
           
+        <Stack.Screen name="WorkoutExercies" component={WorkoutExerciesScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
       </Stack.Navigator>
       {/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
     </NavigationContainer>

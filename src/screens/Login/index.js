@@ -57,6 +57,7 @@ function LoginScreen({ navigation }) {
 
 
   const handleLoginAsync = async () => {
+   // console.log(user);
     registerUser({
       email,
       password,
