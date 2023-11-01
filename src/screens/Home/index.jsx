@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity  } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SQLite from 'expo-sqlite';
-import { showTraining } from './function/showTraining';
-import { trainingList } from './function/trainingList';
-import { clickTrainingDay} from './function/clickTrainingDay';
+import { showTraining } from './functions/showTraining';
+import { trainingList } from './functions/trainingList';
+import { clickTrainingDay} from './functions/clickTrainingDay';
+import Header from '../../components/Header';
+import Toast from 'react-native-toast-message';
 
 function HomeScreen({ navigation }) {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
@@ -28,7 +30,12 @@ useEffect(() => {
     setTreinos(data);
   })
   .catch((error) => {
-    console.error('Erro ao buscar treinos:', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Credenciais incorretas',
+      text2: 'Erro ao buscar treinos:', error,
+      visibilityTime: 3000, // Tempo de exibição do toast em milissegundos
+    });
   });
 }, []);
 
@@ -43,55 +50,50 @@ const trainingDay = {
 };
 
   return (
-    <SafeAreaView >
+    <SafeAreaView style={styles.page}>
+      <Toast />
     <View >
-     
-        <View style={[styles.header]}>
-          <Text style={[styles.textHeader]}>MyFitness Trainer</Text>
-        </View>
-        
+      <Header titleHeader={"Meus Treinos"}/>
         <View>
-        <View style={styles.container}>
-          {/* {console.log(treinos)} */}
-          {treinos.map((treino) => (
-            <TouchableOpacity
-              key={treino.id}
-              style={styles.treinoContainer}
-              onPress={() => clickTrainingDay({ id_dia_treino: treino.id_dia_treino, navigation })}
-            >
-              <Text style={styles.treinoText}>{trainingDay[treino.id_dia_treino]}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-    </View>
-      {/* <Button
-        title="Go to DetailsSSSSSSS"
-        onPress={() => navigation.navigate('Login')}
-      /> */}
+          <View style={styles.container}>
+            {/* {console.log(treinos)} */}
+            {treinos.map((treino) => (
+              <TouchableOpacity
+                key={treino.id}
+                style={styles.treinoContainer}
+                onPress={() => clickTrainingDay({ id_dia_treino: treino.id_dia_treino, navigation })}
+              >
+                <Text style={styles.treinoText}>{trainingDay[treino.id_dia_treino]}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+      </View>
     </View>
     </SafeAreaView>
   );
   
 }
 const styles = StyleSheet.create({
+  page: {
+    backgroundColor: 'white',
+    flex: 1
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10
+    alignItems: 'center'
   },
   treinoContainer: {
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
-    width: '90%'
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#d3d3d3',
+    padding: 15,
+    paddingLeft: 20
   },
   treinoText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'blue', 
+    color: 'black', 
   },
   textHeader: {
     color: 'white',

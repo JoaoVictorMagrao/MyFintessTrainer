@@ -70,11 +70,7 @@ function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        MyFitness{'\n'}
-        <Text style={styles.titleCor}>Trainer</Text>
-      </Text>
-
+      <Toast />
       <Input
         placeholder="Email"
         rightIcon={{ type: 'font-awesome', name: 'envelope' }}

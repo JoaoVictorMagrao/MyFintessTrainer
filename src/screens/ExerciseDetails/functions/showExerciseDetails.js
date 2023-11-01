@@ -4,11 +4,11 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("myfitnessTrainer.db");
 
-export const showExercises = (idTrainingDay) => {
+export const showExerciseDetails = (idExercise, idTrainingDay) => {
 
   return new Promise(async (resolve, reject) => {
     db.transaction(async (tx) => {
-      tx.executeSql("CREATE TABLE IF NOT EXISTS exercises (id INTEGER, id_dia_treino INTEGER, grupo_muscular TEXT, exercicio text);");
+      tx.executeSql("CREATE TABLE IF NOT EXISTS exercisesDetails (id_dia_treino INTEGER, descanso INTEGER, carga INTEGER, repeticoes INTEGER, exercicio text, id_exercicio INTEGER, descricao text);");
       // tx.executeSql('ALTER TABLE exercises ADD COLUMN grupo_muscular TEXT;');
     });
 
@@ -21,11 +21,11 @@ export const showExercises = (idTrainingDay) => {
 
         db.transaction(async (tx) => {
 
-          tx.executeSql('DELETE FROM exercises;');
+          tx.executeSql('DELETE FROM exercisesDetails;');
             data.forEach(async (item) => {
               await tx.executeSql(
-                'INSERT INTO exercises (id, id_dia_treino, grupo_muscular, exercicio) VALUES (?, ?, ?, ?)',
-                [item.id_exercicio, item.id_dia_treino, item.descricao, item.exercicio],
+                'INSERT INTO exercisesDetails (id_dia_treino, descanso, carga, repeticoes, exercicio, id_exercicio, descricao) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [item.id_dia_treino, item.descanso, item.carga, item.repeticoes, item.exercicio, item.id_exercicio, item.descricao],
                 (_, result) => {
         
                 },
@@ -36,12 +36,11 @@ export const showExercises = (idTrainingDay) => {
             });
 
           tx.executeSql(
-           
-            'SELECT * FROM exercises where id_dia_treino = ?',
-            [idTrainingDay],
+            'SELECT * FROM exercisesDetails WHERE id_dia_treino = ? AND id_exercicio = ?',
+            [idTrainingDay, idExercise],
             (_, { rows }) => {
-              const exercices = rows._array;
-              resolve(exercices); 
+              const exercice = rows._array;
+              resolve(exercice); 
             },
             (_, error) => {
               console.error('Erro ao executar a consulta SELECT:', error);

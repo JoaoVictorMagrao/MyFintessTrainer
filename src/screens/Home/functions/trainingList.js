@@ -35,7 +35,7 @@ export const trainingList = async () => {
             'INSERT INTO treinos (id, id_exercicio, id_dia_treino, id_grupo_muscular, id_ficha) VALUES (?, ?, ?, ?, ?)',
             [item.id, item.id_exercicio, item.id_dia_treino, item.id_grupo_muscular, item.id_ficha],
             (_, result) => {
-              console.log('Query executada com sucesso:', result);
+              // console.log('Query executada com sucesso:', result);
             },
             (_, error) => {
               console.error('Erro ao executar a query:', error);

@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Home/index';
 import WorkoutExerciesScreen from '../screens/WorkoutExercises/index';
 import LoginScreen from '../screens/Login/index';
+import ExerciseDetailsScreen from '../screens/ExerciseDetails/index';
 // import Toast from 'react-native-toast-message';
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function AppNavigator() {
         <Stack.Screen name="WorkoutExercies" component={WorkoutExerciesScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ExerciseDetailsScreen" component={ExerciseDetailsScreen} />
         {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
       </Stack.Navigator>
       {/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
