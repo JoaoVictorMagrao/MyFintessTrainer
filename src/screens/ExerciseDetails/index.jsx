@@ -21,7 +21,7 @@ function ExerciseDetailsScreen({ navigation }) {
 
 
   return (
-    <SafeAreaView >
+    <SafeAreaView style={styles.page}>
       <View >
         <Header titleHeader={"Detalhes Exercício"}/>
         
@@ -31,6 +31,11 @@ function ExerciseDetailsScreen({ navigation }) {
              
               >
                 <Text>{exercise.exercicio}</Text>
+                <Text>{exercise.carga}</Text>
+                <Text>{exercise.descricao}</Text>
+                <Text>{exercise.series}</Text>
+                <Text>{exercise.repeticoes}</Text>
+                <Text>{exercise.descanso}</Text>
               </TouchableOpacity>
             ))}
       </View>
@@ -39,6 +44,9 @@ function ExerciseDetailsScreen({ navigation }) {
   
 }
 const styles = StyleSheet.create({
-  
+  page: {
+    backgroundColor: 'white',
+    flex: 1
+  },
 });
 export default ExerciseDetailsScreen;

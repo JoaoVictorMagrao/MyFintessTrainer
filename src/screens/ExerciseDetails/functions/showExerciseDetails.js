@@ -8,8 +8,8 @@ export const showExerciseDetails = (idExercise, idTrainingDay) => {
 
   return new Promise(async (resolve, reject) => {
     db.transaction(async (tx) => {
-      tx.executeSql("CREATE TABLE IF NOT EXISTS exercisesDetails (id_dia_treino INTEGER, descanso INTEGER, carga INTEGER, repeticoes INTEGER, exercicio text, id_exercicio INTEGER, descricao text);");
-      // tx.executeSql('ALTER TABLE exercises ADD COLUMN grupo_muscular TEXT;');
+      tx.executeSql("CREATE TABLE IF NOT EXISTS exercisesDetails (id_dia_treino INTEGER, descanso INTEGER, carga INTEGER, repeticoes INTEGER, series INTEGER, exercicio text, id_exercicio INTEGER, descricao text);");
+      // tx.executeSql('ALTER TABLE exercisesDetails ADD COLUMN series INTEGER;');
     });
 
     try {
@@ -24,8 +24,8 @@ export const showExerciseDetails = (idExercise, idTrainingDay) => {
           tx.executeSql('DELETE FROM exercisesDetails;');
             data.forEach(async (item) => {
               await tx.executeSql(
-                'INSERT INTO exercisesDetails (id_dia_treino, descanso, carga, repeticoes, exercicio, id_exercicio, descricao) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [item.id_dia_treino, item.descanso, item.carga, item.repeticoes, item.exercicio, item.id_exercicio, item.descricao],
+                'INSERT INTO exercisesDetails (id_dia_treino, descanso, carga, repeticoes, series,  exercicio, id_exercicio, descricao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [item.id_dia_treino, item.descanso, item.carga, item.repeticoes, item.series, item.exercicio, item.id_exercicio, item.descricao],
                 (_, result) => {
         
                 },
