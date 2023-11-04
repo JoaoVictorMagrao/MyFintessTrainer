@@ -1,21 +1,26 @@
-import { Text, StyleSheet, View, TouchableOpacity  } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 
-const Header = ({ titleHeader }) => {
-  const navigation = useNavigation(); 
+const Header = ({ titleHeader, showIcon }) => {
+  const navigation = useNavigation();
 
   const handleGoBack = () => {
-    navigation.goBack(); 
+    navigation.goBack();
   };
+
   return (
     <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack} style={styles.iconContainer}>
-          <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />
-        </TouchableOpacity>
-        <View style={styles.mainTextHeader}>
-          <Text style={styles.textHeader}>{titleHeader}</Text>
-        </View>
+      {showIcon && (
+      <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={handleGoBack}>
+            <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />
+          </TouchableOpacity>
+      </View>
+       )}
+      <View style={styles.mainTextHeader}>
+        <Text style={styles.textHeader}>{titleHeader}</Text>
+      </View>
     </View>
   );
 };
@@ -29,7 +34,7 @@ const styles = StyleSheet.create({
   mainTextHeader: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header: {
     flexDirection: 'row',
@@ -37,16 +42,17 @@ const styles = StyleSheet.create({
     height: 70,
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  icon: {
-    borderWidth: 2, 
+  iconContainer: {
+    position: 'absolute',
+    borderWidth: 2,
     borderColor: '#0087F5',
     borderRadius: 50,
     height: 30,
-    alignItems: 'center',
-    display: 'flex',
-  }
+    top: 20,
+    left: 20, 
+  },
 });
 
 export default Header;

@@ -53,7 +53,7 @@ const trainingDay = {
     <SafeAreaView style={styles.page}>
       <Toast />
     <View >
-      <Header titleHeader={"Meus Treinos"}/>
+      <Header titleHeader={"Meus Treinos"} showIcon={false}/>
         <View>
           <View style={styles.container}>
             {/* {console.log(treinos)} */}

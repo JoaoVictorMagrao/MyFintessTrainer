@@ -26,7 +26,7 @@ function WorkoutExerciesScreen({ navigation }) {
     <SafeAreaView style={styles.page} >
       <Toast />
     <View >
-    <Header titleHeader={"Exercicíosss"}/>
+    <Header titleHeader={"Exercicíos"} showIcon={true}/>
         <View>
         <View style={styles.container}>
           {exercices.map((exercise) => (
