@@ -1,7 +1,9 @@
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
+import IconSimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
+import { useNavigation } from '@react-navigation/native';
+import { exitApp } from '../screens/Home/functions/exitApp';
 const Header = ({ titleHeader, showIcon }) => {
   const navigation = useNavigation();
 
@@ -9,15 +11,21 @@ const Header = ({ titleHeader, showIcon }) => {
     navigation.goBack();
   };
 
+
   return (
     <View style={styles.header}>
-      {showIcon && (
       <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={handleGoBack}>
-            <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />
-          </TouchableOpacity>
+      {showIcon ? (
+        <TouchableOpacity onPress={handleGoBack}>
+          <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />    
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => exitApp(navigation)}>
+          <IconSimpleLineIcons name='logout' size={25} color='#0087F5' style={styles.icon} />
+        </TouchableOpacity>
+      )}
       </View>
-       )}
+    
       <View style={styles.mainTextHeader}>
         <Text style={styles.textHeader}>{titleHeader}</Text>
       </View>
@@ -46,8 +54,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    borderWidth: 2,
-    borderColor: '#0087F5',
     borderRadius: 50,
     height: 30,
     top: 20,

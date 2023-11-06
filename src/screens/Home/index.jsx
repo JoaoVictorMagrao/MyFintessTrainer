@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity  } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SQLite from 'expo-sqlite';
 import { showTraining } from './functions/showTraining';
@@ -48,6 +48,13 @@ const trainingDay = {
   6: 'Treino E',
   7: 'Treino F',
 };
+const redirectToProfile = () => {
+  navigation.navigate('Profile'); 
+};
+
+const redirectToAbout = () => {
+  navigation.navigate('About'); 
+};
 
   return (
     <SafeAreaView style={styles.page}>
@@ -67,6 +74,8 @@ const trainingDay = {
               </TouchableOpacity>
             ))}
           </View>
+          {/* <Button title="perfil" onPress={redirectToProfile}/>
+          <Button title="Suporte" onPress={redirectToAbout}/> */}
       </View>
     </View>
     </SafeAreaView>

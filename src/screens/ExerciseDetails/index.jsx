@@ -26,7 +26,7 @@ function ExerciseDetailsScreen({ navigation }) {
         <Header titleHeader={"Detalhes Exercício"} showIcon={true}/>
         
         {exerciceDetails.map((exercise) => (
-              <TouchableOpacity
+              <View
                 key={exercise.id_exercicio}
               >
                 <View style={styles.alignCenter}>
@@ -64,7 +64,7 @@ function ExerciseDetailsScreen({ navigation }) {
                     <Text>{exercise.descricao}</Text>
                   </View>
                 </View>
-              </TouchableOpacity>
+              </View>
             ))}
       </View>
     </SafeAreaView>

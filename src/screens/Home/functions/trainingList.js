@@ -7,9 +7,7 @@ const db = SQLite.openDatabase("myfitnessTrainer.db");
 //const { userData } = useUserContext();
 
 export const trainingList = async () => {
-  db.transaction(tx => {
   
-  });
  // alert(userData?.id_ficha);
 
   try {
