@@ -5,6 +5,7 @@ import * as SQLite from 'expo-sqlite';
 import { useRoute } from '@react-navigation/native';
 import { showDetailsProfile } from './functions/showDetailsProfile';
 import { formatarData, formatarDinheiro } from '../../Util/util';
+import Feather from 'react-native-vector-icons/Feather';
 
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
@@ -34,19 +35,35 @@ function ProfileScreen({ navigation }) {
               style={styles.profileContainer}
             >
               <View>
-                <View style={styles.cardNameStudent}>
-                  <Text style={styles.textNameStudent}>{profile.nameStudent}</Text>
+                <View style={styles.cardIconProfile}> 
+                  <Feather name="user" size={155} color="#0087F5" />
+
+                  <View style={styles.cardNameStudent}>
+                    <Text style={styles.textNameStudent}>{profile.nameStudent}</Text>
+                  </View>
                 </View>
                
-                <View  style={styles.cardPayment}>
-                  <Text style={styles.textPayment}>Data Vencimento: {formatarData(profile.dueDate)}</Text>
-                  <Text style={styles.textPayment}>Valor Mensal: R$ {formatarDinheiro(profile.monthlyValue)}</Text>
+               
+                <View  style={styles.cardInfoProfile}>
+                  <Text style={styles.titlo}>Data Vencimento:</Text>
+                  <Text style={styles.textProfile}>{formatarData(profile.dueDate)}</Text>
                 </View>
-                
 
-                <Text style={styles.text}>{profile.nameSheet}</Text>
-                <Text style={styles.text}>{profile.nameTeacher}</Text>
-                
+                <View  style={styles.cardInfoProfile}>
+                  <Text style={styles.titlo}>Valor Mensal:</Text>
+                  <Text style={styles.textProfile}>R$ {formatarDinheiro(profile.monthlyValue)}</Text>
+                </View>
+
+                <View  style={styles.cardInfoProfile}>
+                  <Text style={styles.titlo}>Ficha: </Text>
+                  <Text style={styles.textProfile}>{profile.nameSheet}</Text>
+                </View>
+
+                <View  style={styles.cardInfoProfile}>
+                  <Text style={styles.titlo}>Professor: </Text>
+                  <Text style={styles.textProfile}>{profile.nameTeacher}</Text>
+                </View>
+  
               </View>
             </View>
           ))}
@@ -62,6 +79,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1
   },
+  titlo: {
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  cardIconProfile: {
+    borderWidth: 2, 
+    borderColor: '#0087F5', 
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
   cardNameStudent: {
 
     alignItems: 'center',
@@ -70,7 +98,10 @@ const styles = StyleSheet.create({
   },
   textNameStudent: {
     fontWeight: 'bold',
-    fontSize: 18
+    fontSize: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: '#0087F5',
+    color: '#0087F5'
 
   },
   container: {
@@ -78,25 +109,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  cardPayment: {
+  cardInfoProfile: {
     width: '100%',
-    borderBottomWidth: 1,
-    borderColor: '#d3d3d3',
-    padding: 15,
+   
+    padding: 5,
     paddingLeft: 20,
     borderRadius: 5
   },
   profileContainer: {
     width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
     padding: 15,
     paddingLeft: 20
   },
   text: {
     color: '#808080'
   },
-  textPayment: {
+  textProfile: {
     color: 'black'
   }
 
