@@ -14,7 +14,7 @@ export const trainingList = async () => {
     const netInfoState = await NetInfo.fetch();
     if (netInfoState.isConnected) {
       
-      const response = await api.get(`/listaTreinosAluno/123`);
+      const response = await api.get(`/listaTreinosAluno/129`);
       const data = response.data;
 
       db.transaction((tx) => {

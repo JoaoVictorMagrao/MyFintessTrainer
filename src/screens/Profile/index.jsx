@@ -7,6 +7,7 @@ import { showDetailsProfile } from './functions/showDetailsProfile';
 import { formatarData, formatarDinheiro } from '../../Util/util';
 import Feather from 'react-native-vector-icons/Feather';
 
+import { exitApp } from './functions/exitApp';
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
 import { color } from 'react-native-elements/dist/helpers';
@@ -16,7 +17,7 @@ function ProfileScreen({ navigation }) {
   const [detailsProfile, setDetailsProfile] = useState([]);
 
   useEffect(() => {
-    showDetailsProfile(79).then((data) => {
+    showDetailsProfile(150).then((data) => {
       setDetailsProfile(data);
     });
   }, []);
@@ -63,6 +64,10 @@ function ProfileScreen({ navigation }) {
                   <Text style={styles.titlo}>Professor: </Text>
                   <Text style={styles.textProfile}>{profile.nameTeacher}</Text>
                 </View>
+
+                <View style={styles.logout}>
+                  <Button style={styles.buttonLogout} color="red" title="Sair da conta" onPress={() => exitApp(navigation)}/>
+                </View>
   
               </View>
             </View>
@@ -83,10 +88,11 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold'
   },
+  logout: {
+    marginTop: 150
+  },
   cardIconProfile: {
-    borderWidth: 2, 
-    borderColor: '#0087F5', 
-    borderRadius: 10,
+
     padding: 10,
     alignItems: 'center',
   },
@@ -111,10 +117,9 @@ const styles = StyleSheet.create({
   },
   cardInfoProfile: {
     width: '100%',
-   
+    borderBottomWidth: 1, 
+    borderColor: '#808080', 
     padding: 5,
-    paddingLeft: 20,
-    borderRadius: 5
   },
   profileContainer: {
     width: '100%',

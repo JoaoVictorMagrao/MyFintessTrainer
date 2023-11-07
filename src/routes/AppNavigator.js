@@ -23,7 +23,7 @@ export default function AppNavigator() {
               statusBarStyle: 'dark',
           }}  >
           
-        {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeNavigator} />
         
         <Stack.Screen name="Tab" component={Tab} />

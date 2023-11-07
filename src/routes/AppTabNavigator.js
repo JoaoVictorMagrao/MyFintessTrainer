@@ -22,6 +22,23 @@ function AppTabNavigator() {
   }}>
 
    
+<Tab.Screen
+            name="Home"
+            component={HomeNavigator}
+            options={{
+              tabBarStyle: { height: 60 },
+              tabBarIconStyle: { marginTop: 5 },
+              tabBarLabelStyle: { marginBottom: 5 },
+              tabBarIcon: ({ focused }) => {
+                return focused ? (
+                  <Icon name="home" size={25} color="#0087F5" />
+                ) : (
+                  <Icon name="home" size={25} color="#808080" />
+                );
+              },
+            }}
+          />
+
 
       <Tab.Screen
         name="Perfil"
@@ -39,23 +56,6 @@ function AppTabNavigator() {
           },
         }}
       />
-
-      <Tab.Screen
-            name="Home"
-            component={HomeNavigator}
-            options={{
-              tabBarStyle: { height: 60 },
-              tabBarIconStyle: { marginTop: 5 },
-              tabBarLabelStyle: { marginBottom: 5 },
-              tabBarIcon: ({ focused }) => {
-                return focused ? (
-                  <Icon name="home" size={25} color="#0087F5" />
-                ) : (
-                  <Icon name="home" size={25} color="#808080" />
-                );
-              },
-            }}
-          />
 
       <Tab.Screen
         name="Sobre"

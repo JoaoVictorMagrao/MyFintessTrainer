@@ -16,7 +16,7 @@ export const showExercises = (idTrainingDay) => {
       const netInfoState = await NetInfo.fetch();
       if (netInfoState.isConnected) {
         
-        const response = await api.get(`/listaExerciciosTreino/123`);
+        const response = await api.get(`/listaExerciciosTreino/129`);
         const data = response.data;
 
         db.transaction(async (tx) => {

@@ -42,7 +42,7 @@ export const showDetailsProfile = (idAluno) => {
         db.transaction(async (tx) => {
         if(data.status){
           tx.executeSql('DELETE FROM profile;');
-          //console.log(data.resultado[0].nome);
+        //  console.log(data);
   //console.log(item);
             tx.executeSql(
               'INSERT INTO profile (nameStudent, monthlyValue, dueDate, dateRegister, nameTeacher, nameSheet) VALUES (?, ?, ?, ?, ?, ?)',
@@ -55,7 +55,7 @@ export const showDetailsProfile = (idAluno) => {
                 data.resultado[0].nome_ficha,
               ],
               (_, result) => {
-                console.log(result);
+              
               },
               (_, error) => {
                 console.error('Erro ao executar a inserção:', error);

@@ -26,19 +26,10 @@ function AboutScreen() {
           <View style={styles.row}></View>
         </View>
         <View style={styles.cardVersion}>
-          <Text style={styles.textVersion}>Versão: 1.0.0</Text>
-        </View>
-
-        <View style={styles.contactInfo}>
-          <Text style={styles.contactLabel}>E-mail: appMyFitnessTrainer@gmail.com</Text>
-          <Text style={styles.contactLabel}>Telefone: (14) 456-7890</Text>
-        </View>
-
-        <View style={styles.descriptionApp}>
-          <Text style={styles.descriptionLabel}>Descrição</Text>
-          <Text style={styles.description}>Aplicativo desenvolvido pelo João Victor Magrão, aonde a função é a visualição do seu treino de musculação.</Text>
-        </View>
-          
+          <Text style={styles.textVersion}>Versão: <Text style={styles.textSubVersion}>1.0.0</Text></Text>
+          <Text style={styles.textVersion}>E-mail: appMyFitnessTrainer@gmail.com</Text>
+          <Text style={styles.textVersion}>Telefone: (14) 456-7890</Text>
+        </View>     
       </View>
     </SafeAreaView>
   );
@@ -49,8 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1
   },
-  descriptionApp:{
-    padding: 15
+  titlo: {
+    fontSize: 15,
   },
   descriptionLabel: {
     fontSize: 20
@@ -79,8 +70,12 @@ const styles = StyleSheet.create({
   cardVersion: {
     padding: 15
   },
+  textSubVersion: {
+    fontSize: 16
+  },
   textVersion: {
-    fontSize: 18
+    fontSize: 16,
+    paddingBottom: 10
   },
   container: {
     flex: 1,

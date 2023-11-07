@@ -16,7 +16,7 @@ export const showExerciseDetails = (idExercise, idTrainingDay) => {
       const netInfoState = await NetInfo.fetch();
       if (netInfoState.isConnected) {
         
-        const response = await api.get(`/listaExerciciosTreino/123`);
+        const response = await api.get(`/listaExerciciosTreino/129`);
         const data = response.data;
 
         db.transaction(async (tx) => {
@@ -25,7 +25,7 @@ export const showExerciseDetails = (idExercise, idTrainingDay) => {
             data.forEach(async (item) => {
               await tx.executeSql(
                 'INSERT INTO exercisesDetails (id_dia_treino, descanso, carga, repeticoes, series,  exercicio, id_exercicio, descricao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                [item.id_dia_treino, item.descanso, item.carga, item.repeticoes, item.series, item.exercicio, item.id_exercicio, item.descricao],
+                [item.id_dia_treino, item.descanso, item.carga, item.repeticoes, item.series, item.exercicio, item.id_exercicio, item.descricao_exercicio],
                 (_, result) => {
         
                 },

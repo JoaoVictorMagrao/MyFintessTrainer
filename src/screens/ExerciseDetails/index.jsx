@@ -51,7 +51,7 @@ function ExerciseDetailsScreen({ navigation }) {
                         <Text style={styles.textTitle}>Repetições</Text>
                       </View>
                       <View style={styles.textItemContainer}>
-                        <Text style={styles.textItem}>{exercise.descanso}</Text>
+                      <Text style={styles.textItem}>{(exercise.descanso >= 60) ? (exercise.descanso / 60).toFixed(2) + ' (M)' : exercise.descanso + ' (S)'}</Text>
                         <Text style={styles.textTitle}>Repouso</Text>
                       </View>
                     </View>

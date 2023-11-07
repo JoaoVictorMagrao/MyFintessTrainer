@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import IconSimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import { useNavigation } from '@react-navigation/native';
-import { exitApp } from '../screens/Home/functions/exitApp';
+
 const Header = ({ titleHeader, showIcon }) => {
   const navigation = useNavigation();
 
@@ -17,13 +17,9 @@ const Header = ({ titleHeader, showIcon }) => {
       <View style={styles.iconContainer}>
       {showIcon ? (
         <TouchableOpacity onPress={handleGoBack}>
-          <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />    
+          <Icon name='arrowleft' size={25} color='#0087F5' style={styles.icon} />
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => exitApp(navigation)}>
-          <IconSimpleLineIcons name='logout' size={25} color='#0087F5' style={styles.icon} />
-        </TouchableOpacity>
-      )}
+      ) : null}
       </View>
     
       <View style={styles.mainTextHeader}>
