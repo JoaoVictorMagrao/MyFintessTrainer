@@ -28,42 +28,38 @@ function ExerciseDetailsScreen({ navigation }) {
         {exerciceDetails.map((exercise) => (
               <View
                 key={exercise.id_exercicio}
+                style={styles.container}
               >
-                <View style={styles.alignCenter}>
+            
                   <View style={styles.cardExercise}>
                     <Text style={styles.exerciseText}>{exercise.exercicio}</Text>
                   </View>
-                </View>
-                
-                <View style={styles.alignCenter}>
-                  <View style={styles.cardDetailsExercise}>
-                    <View style={styles.textContainer}>
-                      <View style={styles.textItemContainer}>
-                        <Text style={styles.textItem}>{exercise.carga} KG</Text>
-                        <Text style={styles.textTitle}>Carga</Text>
-                      </View>
-                      <View style={styles.textItemContainer}>
-                        <Text style={styles.textItem}>{exercise.series}</Text>
-                        <Text style={styles.textTitle}>Séries</Text>
-                      </View>
-                      <View style={styles.textItemContainer}>
-                        <Text style={styles.textItem}>{exercise.repeticoes}</Text>
-                        <Text style={styles.textTitle}>Repetições</Text>
-                      </View>
-                      <View style={styles.textItemContainer}>
-                      <Text style={styles.textItem}>{(exercise.descanso >= 60) ? (exercise.descanso / 60).toFixed(2) + ' (M)' : exercise.descanso + ' (S)'}</Text>
-                        <Text style={styles.textTitle}>Repouso</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+           
 
-                <View style={styles.alignCenter}>
+                       
+                    <View style={styles.cardInfoExercise}>
+                      <Text style={styles.titlo}>Séries: {exercise.series}</Text>
+                    </View>
+
+                    <View  style={styles.cardInfoExercise}>
+                      <Text style={styles.titlo}>Repetições: {exercise.repeticoes}</Text>
+                    </View>
+
+                    <View  style={styles.cardInfoExercise}>
+                      <Text style={styles.titlo}>Carga: {exercise.carga}</Text>
+                    </View>
+
+                    <View  style={styles.cardInfoExercise}>
+                      <Text style={styles.titlo}>Repouso: {(exercise.descanso >= 60) ? (exercise.descanso / 60).toFixed(2).replace('.00', '') + ' Minutos' : exercise.descanso + ' Segundos'}</Text>
+                    </View>
+           
+
+             
                   <View style={styles.cardObs}>
                     <Text style={styles.textDescriptionObs}>Observação do exercício</Text>
                     <Text>{exercise.descricao}</Text>
                   </View>
-                </View>
+               
               </View>
             ))}
       </View>
@@ -76,28 +72,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1
   },
-  cardDetailsExercise: {
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  cardInfoExercise: {
     width: '90%',
-    borderColor: '#d3d3d3',
-    padding: 15,
-    paddingLeft: 20,
-    borderRadius: 10,
+    borderBottomWidth: 1, 
+    borderColor: '#808080', 
+    paddingLeft: 15,
+    marginTop: 35
   },
-  textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  textItemContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  textItem: {
-    borderWidth: 1,
-    borderColor: '#d3d3d3',
-    borderRadius: 50,
-    padding: 10,
-    margin: 5,
-    textAlign: 'center',
+  titlo: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
+    padding: 5
   },
   cardObs: {
     width: '90%',
@@ -105,19 +96,17 @@ const styles = StyleSheet.create({
     borderColor: '#d3d3d3',
     padding: 6,
     paddingLeft: 20,
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: 100
   },
-  textTitle: {
-    marginTop: 5,
-    textAlign: 'center',
-  },
+ 
   textDescriptionObs: {
     fontSize: 20,
     fontWeight: 'bold'
   },
   alignCenter: {
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
   },
   cardExercise: {
     alignItems: 'center',
@@ -126,7 +115,8 @@ const styles = StyleSheet.create({
     borderColor: '#d3d3d3',
     padding: 15,
     paddingLeft: 20,
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: 15
   },
   exerciseText: {
     fontSize: 18,

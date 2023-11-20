@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Image  } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Logo from '../../img/logoApp.png';
+import Logo from '../../img/logo_app.png';
 import Header from '../../components/Header';
 
 
