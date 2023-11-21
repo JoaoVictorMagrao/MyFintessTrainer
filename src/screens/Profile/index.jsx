@@ -1,83 +1,87 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity  } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SQLite from 'expo-sqlite';
 import { useRoute } from '@react-navigation/native';
 import { showDetailsProfile } from './functions/showDetailsProfile';
 import { formatarData, formatarDinheiro } from '../../Util/util';
 import Feather from 'react-native-vector-icons/Feather';
-
+import { UserContext } from '../../context/ContextUser';
 import { exitApp } from './functions/exitApp';
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
 import { color } from 'react-native-elements/dist/helpers';
+import { useContext } from 'react';
 
 function ProfileScreen({ navigation }) {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
   const [detailsProfile, setDetailsProfile] = useState([]);
+  const { userData } = useContext(UserContext);
+
 
   useEffect(() => {
-    showDetailsProfile(150).then((data) => {
+    //console.log('idaluno:', userData);
+    showDetailsProfile(userData?.id).then((data) => {
       setDetailsProfile(data);
     });
-  }, []);
- 
+  }, [userData]);
+
 
   return (
     <SafeAreaView style={styles.page} >
       <Toast />
-    <View >
-    <Header titleHeader={"Perfil"} showIcon={true}/>
+      <View >
+        <Header titleHeader={"Perfil"} showIcon={true} />
         <View>
-        <View style={styles.container}>
-          {detailsProfile.map((profile) => (
-            <View
-              key={1}
-              style={styles.profileContainer}
-            >
-              <View>
-                <View style={styles.cardIconProfile}> 
-                  <Feather name="user" size={155} color="#0087F5" />
+          <View style={styles.container}>
+            {detailsProfile.map((profile) => (
+              <View
+                key={1}
+                style={styles.profileContainer}
+              >
+                <View>
+                  <View style={styles.cardIconProfile}>
+                    <Feather name="user" size={155} color="#0087F5" />
 
-                  <View style={styles.cardNameStudent}>
-                    <Text style={styles.textNameStudent}>{profile.nameStudent}</Text>
+                    <View style={styles.cardNameStudent}>
+                      <Text style={styles.textNameStudent}>{profile.nameStudent}</Text>
+                    </View>
                   </View>
-                </View>
-               
-               
-                <View  style={styles.cardInfoProfile}>
-                  <Text style={styles.titlo}>Data Vencimento:</Text>
-                  <Text style={styles.textProfile}>{formatarData(profile.dueDate)}</Text>
-                </View>
 
-                <View  style={styles.cardInfoProfile}>
-                  <Text style={styles.titlo}>Valor Mensal:</Text>
-                  <Text style={styles.textProfile}>R$ {formatarDinheiro(profile.monthlyValue)}</Text>
-                </View>
 
-                <View  style={styles.cardInfoProfile}>
-                  <Text style={styles.titlo}>Ficha: </Text>
-                  <Text style={styles.textProfile}>{profile.nameSheet}</Text>
-                </View>
+                  <View style={styles.cardInfoProfile}>
+                    <Text style={styles.titlo}>Data Vencimento:</Text>
+                    <Text style={styles.textProfile}>{formatarData(profile.dueDate)}</Text>
+                  </View>
 
-                <View  style={styles.cardInfoProfile}>
-                  <Text style={styles.titlo}>Professor: </Text>
-                  <Text style={styles.textProfile}>{profile.nameTeacher}</Text>
-                </View>
+                  <View style={styles.cardInfoProfile}>
+                    <Text style={styles.titlo}>Valor Mensal:</Text>
+                    <Text style={styles.textProfile}>R$ {formatarDinheiro(profile.monthlyValue)}</Text>
+                  </View>
 
-                <View style={styles.logout}>
-                  <Button style={styles.buttonLogout} color="red" title="Sair da conta" onPress={() => exitApp(navigation)}/>
+                  <View style={styles.cardInfoProfile}>
+                    <Text style={styles.titlo}>Ficha: </Text>
+                    <Text style={styles.textProfile}>{profile.nameSheet}</Text>
+                  </View>
+
+                  <View style={styles.cardInfoProfile}>
+                    <Text style={styles.titlo}>Professor: </Text>
+                    <Text style={styles.textProfile}>{profile.nameTeacher}</Text>
+                  </View>
+
+                  <View style={styles.logout}>
+                    <Button style={styles.buttonLogout} color="red" title="Sair da conta" onPress={() => exitApp(navigation)} />
+                  </View>
+
                 </View>
-  
               </View>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
-    </View>
-    </View>
+      </View>
     </SafeAreaView>
   );
-  
+
 }
 const styles = StyleSheet.create({
   page: {
@@ -117,8 +121,8 @@ const styles = StyleSheet.create({
   },
   cardInfoProfile: {
     width: '100%',
-    borderBottomWidth: 1, 
-    borderColor: '#808080', 
+    borderBottomWidth: 1,
+    borderColor: '#808080',
     padding: 5,
   },
   profileContainer: {

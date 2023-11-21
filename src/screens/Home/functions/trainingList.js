@@ -1,12 +1,12 @@
 import api from '../../../services/apiServices';
 import NetInfo from "@react-native-community/netinfo";
 import * as SQLite from 'expo-sqlite';
-import { useUserContext } from '../../../context/ContextUser';
+
 
 const db = SQLite.openDatabase("myfitnessTrainer.db");
 //const { userData } = useUserContext();
 
-export const trainingList = async () => {
+export const trainingList = async (idSheet) => {
   
  // alert(userData?.id_ficha);
 
@@ -14,7 +14,7 @@ export const trainingList = async () => {
     const netInfoState = await NetInfo.fetch();
     if (netInfoState.isConnected) {
       
-      const response = await api.get(`/listaTreinosAluno/129`);
+      const response = await api.get(`/listaTreinosAluno/${idSheet}`);
       const data = response.data;
 
       db.transaction((tx) => {

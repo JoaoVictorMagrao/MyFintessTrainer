@@ -5,7 +5,7 @@ import * as SQLite from 'expo-sqlite';
 import { useRoute } from '@react-navigation/native';
 import { showExercises } from './functions/showExercises';
 import { clickExerciseDetails } from './functions/clickExerciseDetails';
-
+import { useContext } from 'react';
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
 

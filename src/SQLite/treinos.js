@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { useUserContext } from '../context/ContextUser';
+
 
 const db = SQLite.openDatabase("myfitnessTrainer.db");
   

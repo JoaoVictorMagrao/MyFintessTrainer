@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Input, Button, Icon, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
-import { useUserContext } from '../../context/ContextUser';
+import { UserContext } from '../../context/ContextUser';
 import * as SQLite from 'expo-sqlite';
 import { registerUser } from './functions/registerUser';
 import { LoginUser } from './functions/loginUser';
-
+import { useContext } from 'react';
 
 function openDatabase() {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
@@ -39,17 +39,19 @@ function LoginScreen({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { userData, setUser } = useUserContext();
   const [rememberPassword, setRememberPassword] = useState(false);
+  const { userData, setUserData } = useContext(UserContext);
 
   useEffect(() => {
+    // console.log(userData);
     handleLogin();
+    console.log('terste');
   }, []);
 
   const handleLogin = () => {
     LoginUser({
       db,
-      setUser,
+      setUser: setUserData,
       navigation,
       handleLoginAsync
     })
@@ -57,11 +59,11 @@ function LoginScreen({ navigation }) {
 
 
   const handleLoginAsync = async () => {
-   // console.log(user);
+    // console.log(user);
     registerUser({
       email,
       password,
-      setUser,
+      setUser: setUserData,
       rememberPassword,
       navigation,
       db

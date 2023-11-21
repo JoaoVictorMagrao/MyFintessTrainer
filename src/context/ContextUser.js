@@ -1,18 +1,16 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-const UserContext = createContext();
+export const UserContext = createContext({ userData: null, setUserData: () => { } });
 
-export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-
-  const setUser = (user) => {
-    setUserData(user);
-  };
-
+  // console.log(userData);
+  useEffect(() => {
+    //console.log(userData);
+  }, [userData]);
   return (
-    <UserContext.Provider value={{ userData, setUser }}>
+    <UserContext.Provider value={{ userData, setUserData }}>
       {children}
     </UserContext.Provider>
   );
