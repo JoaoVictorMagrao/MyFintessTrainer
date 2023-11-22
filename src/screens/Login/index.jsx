@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Input, Button, Icon, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
@@ -6,7 +6,7 @@ import { UserContext } from '../../context/ContextUser';
 import * as SQLite from 'expo-sqlite';
 import { registerUser } from './functions/registerUser';
 import { LoginUser } from './functions/loginUser';
-import { useContext } from 'react';
+
 
 function openDatabase() {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
