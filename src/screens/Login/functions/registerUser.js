@@ -13,7 +13,6 @@ export const registerUser = async ({ email, password, setUser, rememberPassword,
 
     if (response.data.msg === 'OK') {
       const user = response.data.user;
-      console.log('111111111111111111111');
       console.log(user);
       setUser(user);
 
@@ -23,7 +22,7 @@ export const registerUser = async ({ email, password, setUser, rememberPassword,
           tx.executeSql("insert into users (username, password, id, email, idFicha) values (?, ?, ?, ?, ?);", [user.nome, user.senha, user.id, user.email, user.id_ficha])
         })
       }
-      navigation.navigate('Home');
+      navigation.navigate('Tab');
     } else {
       Toast.show({
         type: 'error',

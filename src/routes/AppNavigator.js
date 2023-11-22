@@ -23,7 +23,7 @@ function AppStacks() {
   useEffect(() => {
     session.verify().then(user => {
       if (user) {
-        navigation.navigate('Home');
+        navigation.navigate('Tab');
         setUserData(user);
       } else {
         navigation.navigate('Login');

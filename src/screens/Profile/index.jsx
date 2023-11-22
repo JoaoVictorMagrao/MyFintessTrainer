@@ -16,14 +16,16 @@ import { useContext } from 'react';
 function ProfileScreen({ navigation }) {
   const db = SQLite.openDatabase("myfitnessTrainer.db");
   const [detailsProfile, setDetailsProfile] = useState([]);
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
 
 
   useEffect(() => {
     //console.log('idaluno:', userData);
-    showDetailsProfile(userData?.id).then((data) => {
-      setDetailsProfile(data);
-    });
+    if (userData?.id) {
+      showDetailsProfile(userData?.id).then((data) => {
+        setDetailsProfile(data);
+      });
+    }
   }, [userData]);
 
 
@@ -44,33 +46,33 @@ function ProfileScreen({ navigation }) {
                     <Feather name="user" size={155} color="#0087F5" />
 
                     <View style={styles.cardNameStudent}>
-                      <Text style={styles.textNameStudent}>{profile.nameStudent}</Text>
+                      <Text style={styles.textNameStudent}>{profile?.nameStudent}</Text>
                     </View>
                   </View>
 
 
                   <View style={styles.cardInfoProfile}>
                     <Text style={styles.titlo}>Data Vencimento:</Text>
-                    <Text style={styles.textProfile}>{formatarData(profile.dueDate)}</Text>
+                    <Text style={styles.textProfile}>{formatarData(profile?.dueDate)}</Text>
                   </View>
 
                   <View style={styles.cardInfoProfile}>
                     <Text style={styles.titlo}>Valor Mensal:</Text>
-                    <Text style={styles.textProfile}>R$ {formatarDinheiro(profile.monthlyValue)}</Text>
+                    <Text style={styles.textProfile}>R$ {formatarDinheiro(profile?.monthlyValue)}</Text>
                   </View>
 
                   <View style={styles.cardInfoProfile}>
                     <Text style={styles.titlo}>Ficha: </Text>
-                    <Text style={styles.textProfile}>{profile.nameSheet}</Text>
+                    <Text style={styles.textProfile}>{profile?.nameSheet}</Text>
                   </View>
 
                   <View style={styles.cardInfoProfile}>
                     <Text style={styles.titlo}>Professor: </Text>
-                    <Text style={styles.textProfile}>{profile.nameTeacher}</Text>
+                    <Text style={styles.textProfile}>{profile?.nameTeacher}</Text>
                   </View>
 
                   <View style={styles.logout}>
-                    <Button style={styles.buttonLogout} color="red" title="Sair da conta" onPress={() => exitApp(navigation)} />
+                    <Button style={styles.buttonLogout} color="red" title="Sair da conta" onPress={() => exitApp(navigation, setUserData)} />
                   </View>
 
                 </View>

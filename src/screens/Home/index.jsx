@@ -22,19 +22,24 @@ function HomeScreen({ navigation }) {
   //const [dataTraining, setDataTraining]  = useState([]);
 
   useEffect(() => {
-    trainingList(userData?.id_ficha);
-    showTraining({ db })
-      .then((data) => {
-        setTreinos(data);
-      })
-      .catch((error) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Credenciais incorretas',
-          text2: 'Erro ao buscar treinos:', error,
-          visibilityTime: 3000, // Tempo de exibição do toast em milissegundos
+    console.log('idFicha:', userData?.id_ficha);
+    trainingList(userData?.id_ficha).then(() => {
+      showTraining({ db })
+        .then((data) => {
+          console.log('------------');
+          console.log(data);
+          setTreinos(data);
+        })
+        .catch((error) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Credenciais incorretas',
+            text2: 'Erro ao buscar treinos:', error,
+            visibilityTime: 3000, // Tempo de exibição do toast em milissegundos
+          });
         });
-      });
+    })
+
   }, [userData]);
 
   const trainingDay = {

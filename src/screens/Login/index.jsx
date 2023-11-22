@@ -42,19 +42,19 @@ function LoginScreen({ navigation }) {
   const [rememberPassword, setRememberPassword] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
 
-  useEffect(() => {
-    // console.log(userData);
-    handleLogin();
-  }, []);
+  // useEffect(() => {
+  //   // console.log(userData);
+  //   handleLogin();
+  // }, []);
 
-  const handleLogin = () => {
-    LoginUser({
-      db,
-      setUser: setUserData,
-      navigation,
-      handleLoginAsync
-    })
-  };
+  // const handleLogin = () => {
+  //   LoginUser({
+  //     db,
+  //     setUser: setUserData,
+  //     navigation,
+  //     handleLoginAsync
+  //   })
+  // };
 
 
   const handleLoginAsync = async () => {
