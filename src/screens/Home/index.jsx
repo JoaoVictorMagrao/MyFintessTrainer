@@ -22,12 +22,10 @@ function HomeScreen({ navigation }) {
   //const [dataTraining, setDataTraining]  = useState([]);
 
   useEffect(() => {
-    console.log('idFicha:', userData?.id_ficha);
+
     trainingList(userData?.id_ficha).then(() => {
       showTraining({ db })
         .then((data) => {
-          console.log('------------');
-          console.log(data);
           setTreinos(data);
         })
         .catch((error) => {

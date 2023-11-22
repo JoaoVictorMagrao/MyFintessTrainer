@@ -40,6 +40,7 @@ export const showExerciseDetails = (idExercise, idTrainingDay, idSheet) => {
             [idTrainingDay, idExercise],
             (_, { rows }) => {
               const exercice = rows._array;
+
               resolve(exercice);
             },
             (_, error) => {
