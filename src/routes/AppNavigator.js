@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Home/index';
 import WorkoutExerciesScreen from '../screens/WorkoutExercises/index';
@@ -10,21 +10,32 @@ import AboutScreen from '../screens/About/index';
 import Tab from './AppTabNavigator';
 import HomeNavigator from './HomeNavigator';
 import useSession from '../hooks/useSession';
+import { UserContext } from '../context/ContextUser';
+import { useContext } from 'react';
 
 const Stack = createStackNavigator();
 
-export default function AppNavigator() {
-  // const session = useSession();
-  // useEffect(() => {
-  //   session.verify().then(user => {
-  //     navigation.navigate('Home');
-  //   })
-  // }, []);
+function AppStacks() {
+  const navigation = useNavigation();
+  const session = useSession();
+  const { setUserData } = useContext(UserContext);
+
+  useEffect(() => {
+    session.verify().then(user => {
+      if (user) {
+        navigation.navigate('Home');
+        setUserData(user);
+      } else {
+        navigation.navigate('Login');
+      }
+
+    })
+  }, []);
 
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, statusBarStyle: 'dark' }}>
+    <>
+      <Stack.Navigator initialRouteName="Tab" screenOptions={{ headerShown: false, statusBarStyle: 'dark' }}>
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeNavigator} />
@@ -32,6 +43,15 @@ export default function AppNavigator() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
       </Stack.Navigator>
+    </>
+  );
+}
+
+export default function AppNavigator() {
+
+  return (
+    <NavigationContainer>
+      <AppStacks />
     </NavigationContainer>
   );
 }

@@ -33,7 +33,7 @@ const LoginUser = new Promise((resolve, reject) => {
 })
 const useSession = () => {
   return {
-    verify: LoginUser
+    verify: async () => LoginUser
   }
 }
 export default useSession;

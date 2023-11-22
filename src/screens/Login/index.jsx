@@ -45,7 +45,6 @@ function LoginScreen({ navigation }) {
   useEffect(() => {
     // console.log(userData);
     handleLogin();
-    console.log('terste');
   }, []);
 
   const handleLogin = () => {
